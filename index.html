@@ -28,10 +28,13 @@
 
 <body>
 
-  <header>
+  <header class="header">
     <div class="logo"><img src="assets/images/logo.svg" alt="logo"></div>
-    <div class="units"><img src="assets/images/icon-units.svg" alt="icon-units"> Units <img
-        src="assets/images/icon-dropdown.svg" alt="icon-dropdown"></div>
+    <button class="units" aria-label="Change units">
+      <img src="assets/images/icon-units.svg" alt="icon-units">
+      Units
+      <img src="assets/images/icon-dropdown.svg" alt="icon-dropdown">
+    </button>
   </header>
 
   <section class="search">
@@ -39,111 +42,118 @@
 
     <form>
       <label for="search" class="sr_only">Search city</label>
-      <input type="text" name="search" id="search">
+      <input type="text" name="search" id="search" placeholder="Search for a place...">
       <button type="submit">Search</button>
     </form>
   </section>
 
   <main class="mainContent">
-    <article class="temp">
-      <h2>Berlin, Germany</h2>
-      <p>Tuesday, Aug 5, 2025</p>
-      <div class="temp_number"><img src="assets/images/icon-sunny.webp" alt="icon-sunny">68<span
-          class="tempDeg">&deg;</span>
-      </div>
-    </article>
+    <div class="minLeft">
+      <article class="temp">
+        <div>
+          <h2>Berlin, Germany</h2>
+          <p>Tuesday, Aug 5, 2025</p>
+        </div>
+        <div class="temp_number"><img src="assets/images/icon-sunny.webp" alt="icon-sunny"><span
+            class="tempDeg">68&deg;</span>
+        </div>
+      </article>
 
-    <section class="temp_info">
-      <ul class="temp_info_list">
-        <li class="temp_infoCard">
-          Feels like
-          <p>64&deg</p>
-        </li>
-        <li class="temp_infoCard">
-          Humidity
-          <p>46%</p>
-        </li>
-        <li class="temp_infoCard">
-          Wind
-          <p>9 mph</p>
-        </li>
-        <li class="temp_infoCard">
-          Precipitation
-          <p>0 in</p>
-        </li>
-      </ul>
-    </section>
-
-    <section class="dailyForecast">
-
-      <ul class="dailyForecast_list">
-        <li class="dailyForecast_card">
-          <h3>Tue</h3>
-          <img src="assets/images/icon-rain.webp" alt="icon-rain">
-          <div class="dailyForecast_cardNumber">
-            <p>68&deg;</p>
-            <p>57&deg;</p>
+      <section class="temp_info">
+        <div class="temp_info_grid">
+          <div class="temp_infoCard">
+            <span>Feels Like</span>
+            <strong>64°</strong>
           </div>
-        </li>
-        <li class="dailyForecast_card">
-          <h3>Wed</h3>
-          <img src="assets/images/icon-drizzle.webp" alt="icon-drizzle">
-          <div class="dailyForecast_cardNumber">
-            <p>70&deg;</p>
-            <p>59&deg;</p>
-          </div>
-        </li>
-        <li class="dailyForecast_card">
-          <h3>Thu</h3>
-          <img src="assets/images/icon-sunny.webp" alt="icon-sunny">
-          <div class="dailyForecast_cardNumber">
-            <p>75&deg;</p>
-            <p>57&deg;</p>
-          </div>
-        </li>
-        <li class="dailyForecast_card">
-          <h3>Fri</h3>
-          <img src="assets/images/icon-partly-cloudy.webp" alt="icon-partly-cloudy">
-          <div class="dailyForecast_cardNumber">
-            <p>77&deg;</p>
-            <p>55&deg;</p>
-          </div>
-        </li>
 
-        <li class="dailyForecast_card">
-          <h3>Sat</h3>
-          <img src="assets/images/icon-storm.webp" alt="icon-storm">
-          <div class="dailyForecast_cardNumber">
-            <p>70&deg;</p>
-            <p>59&deg;</p>
+          <div class="temp_infoCard">
+            <span>Humidity</span>
+            <strong>46%</strong>
           </div>
-        </li>
 
-        <li class="dailyForecast_card">
-          <h3>Sun</h3>
-          <img src="assets/images/icon-snow.webp" alt="icon-snow">
-          <div class="dailyForecast_cardNumber">
-            <p>77&deg;</p>
-            <p>61&deg;</p>
+          <div class="temp_infoCard">
+            <span>Wind</span>
+            <strong>9 mph</strong>
           </div>
-        </li>
-        <li class="dailyForecast_card">
-          <h3>Mon</h3>
-          <img src="assets/images/icon-fog.webp" alt="icon-fog">
-          <div class="dailyForecast_cardNumber">
-            <p>75&deg;</p>
-            <p>59&deg;</p>
+
+          <div class="temp_infoCard">
+            <span>Precipitation</span>
+            <strong>0 in</strong>
           </div>
-        </li>
-      </ul>
+        </div>
+      </section>
 
-    </section>
+      <section class="dailyForecast">
+        <h2>Daily forecast</h2>
 
+        <ul class="dailyForecast_list">
+          <li class="dailyForecast_card">
+            <h3>Tue</h3>
+            <img src="assets/images/icon-rain.webp" alt="icon-rain">
+            <div class="dailyForecast_cardNumber">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </li>
+          <li class="dailyForecast_card">
+            <h3>Wed</h3>
+            <img src="assets/images/icon-drizzle.webp" alt="icon-drizzle">
+            <div class="dailyForecast_cardNumber">
+              <p>70&deg;</p>
+              <p>59&deg;</p>
+            </div>
+          </li>
+          <li class="dailyForecast_card">
+            <h3>Thu</h3>
+            <img src="assets/images/icon-sunny.webp" alt="icon-sunny">
+            <div class="dailyForecast_cardNumber">
+              <p>75&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </li>
+          <li class="dailyForecast_card">
+            <h3>Fri</h3>
+            <img src="assets/images/icon-partly-cloudy.webp" alt="icon-partly-cloudy">
+            <div class="dailyForecast_cardNumber">
+              <p>77&deg;</p>
+              <p>55&deg;</p>
+            </div>
+          </li>
 
-    <article class="hourlyForecast">
-      <header>
+          <li class="dailyForecast_card">
+            <h3>Sat</h3>
+            <img src="assets/images/icon-storm.webp" alt="icon-storm">
+            <div class="dailyForecast_cardNumber">
+              <p>70&deg;</p>
+              <p>59&deg;</p>
+            </div>
+          </li>
+
+          <li class="dailyForecast_card">
+            <h3>Sun</h3>
+            <img src="assets/images/icon-snow.webp" alt="icon-snow">
+            <div class="dailyForecast_cardNumber">
+              <p>77&deg;</p>
+              <p>61&deg;</p>
+            </div>
+          </li>
+          <li class="dailyForecast_card">
+            <h3>Mon</h3>
+            <img src="assets/images/icon-fog.webp" alt="icon-fog">
+            <div class="dailyForecast_cardNumber">
+              <p>75&deg;</p>
+              <p>59&deg;</p>
+            </div>
+          </li>
+        </ul>
+
+      </section>
+    </div>
+
+    <aside class="hourlyForecast">
+      <header class="hourlyForecast_header">
         <h3>Hourly forecast</h3>
-        <div>Tuesday<img src="assets/images/icon-dropdown.svg" alt="icon-dropdown"></div>
+        <button>Tuesday<img src="assets/images/icon-dropdown.svg" alt="icon-dropdown"></button>
       </header>
 
       <ul class="hourlyForecast_list">
@@ -189,7 +199,7 @@
         </li>
 
       </ul>
-    </article>
+    </aside>
   </main>
 
   <div class="attribution">
