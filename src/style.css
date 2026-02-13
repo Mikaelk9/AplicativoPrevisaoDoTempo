@@ -300,13 +300,22 @@ form button {
     font-size: 11px;
     text-align: center;
     padding: 1rem 0;
+    font-family: var(--DMSans);
 }
 
 .attribution a {
-    color: hsl(228, 45%, 44%);
+    color: var(--Blue500);
 }
 
+@media (min-width: 800px) {
+    .dailyForecast_list {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+    }
 
+
+}
 @media (min-width: 1200px) {
     .mainContent {
         display: grid;
@@ -317,7 +326,7 @@ form button {
         margin: 0 auto;
     }
 
-    .header{
+    .header {
         margin: 2rem 6rem;
     }
 
@@ -370,7 +379,8 @@ form button {
         gap: 1rem;
     }
 
-    .dailyForecast_card{
+    .dailyForecast_card {
         gap: 0.8rem;
     }
 }
+
