@@ -30,11 +30,37 @@
 
   <header class="header">
     <div class="logo"><img src="assets/images/logo.svg" alt="logo"></div>
-    <button class="units" aria-label="Change units">
-      <img src="assets/images/icon-units.svg" alt="icon-units">
-      Units
-      <img src="assets/images/icon-dropdown.svg" alt="icon-dropdown">
-    </button>
+
+    <div class="dropdown_units">
+      <button class="units dropdown_toggle" aria-label="Change units">
+        <img src="assets/images/icon-units.svg" alt="icon-units">
+        Units
+        <img src="assets/images/icon-dropdown.svg" alt="icon-dropdown">
+      </button>
+
+      <div class="dropdown_menu_units">
+        <h2>Switch to imperial</h2>
+
+        <div class="dropdown_menu_units_temperature">
+          <h3>Temperature</h3>
+          <button>Celsius (&deg;C)</button>
+          <button>Fahrenheit (&deg;F)</button>
+        </div>
+
+        <div class="dropdown_menu_units_windSpeed">
+          <h3>Wind Speed</h3>
+          <button>km/h</button>
+          <button>mph</button>
+        </div>
+
+        <div class="dropdown_menu_units_precipitation">
+          <h3>Precipitation</h3>
+          <button>Millimeters (mm)</button>
+          <button>Inches (in)</button>
+        </div>
+
+      </div>
+    </div>
   </header>
 
   <section class="search">
@@ -153,7 +179,21 @@
     <aside class="hourlyForecast">
       <header class="hourlyForecast_header">
         <h3>Hourly forecast</h3>
-        <button>Tuesday<img src="assets/images/icon-dropdown.svg" alt="icon-dropdown"></button>
+
+        <div class="dropdown_hoyrlyForecast">
+          <button class="dropdown_hoyrlyForecast_button">Tuesday<img src="assets/images/icon-dropdown.svg" alt="icon-dropdown"></button>
+
+          <div class="dropdown_hoyrlyForecast_menu">
+            <button>Monday</button>
+            <button>Tuesday</button>
+            <button>Wednesday</button>
+            <button>Thursday</button>
+            <button>Friday</button>
+            <button>Saturday</button>
+            <button>Sunday</button>
+          </div>
+        </div>
+
       </header>
 
       <ul class="hourlyForecast_list">
@@ -203,7 +243,6 @@
   </main>
 
   <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
     Coded by <a href="https://portfolio-brown-eta-66.vercel.app/" target="_blank">Mikael Torres</a>.
   </div>
   <script src="src/script.js"></script>
