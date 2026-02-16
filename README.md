@@ -1,4 +1,4 @@
-# Projeto em cosntrução
+# 'Projeto em construção'
 
 ---
 # Aplicativo de clima
