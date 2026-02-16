@@ -45,7 +45,7 @@ Os usuários devem ser capazes de:
 
 ### Links
 
-- Visite o site em: [Weather app](*)
+- Visite o site em: [Weather app](https://aplicativo-previsao-do-tempo.vercel.app/)
 
 ---
 
