@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="./src/style.css">
 
-  <title>Frontend Mentor | Weather app</title>
+  <title>Weather app</title>
 
 
 </head>
@@ -43,19 +43,19 @@
 
         <div class="dropdown_menu_units_temperature">
           <h3>Temperature</h3>
-          <button>Celsius (&deg;C)</button>
+          <button class="is_active">Celsius (&deg;C)</button>
           <button>Fahrenheit (&deg;F)</button>
         </div>
 
         <div class="dropdown_menu_units_windSpeed">
           <h3>Wind Speed</h3>
-          <button>km/h</button>
+          <button class="is_active">km/h</button>
           <button>mph</button>
         </div>
 
         <div class="dropdown_menu_units_precipitation">
           <h3>Precipitation</h3>
-          <button>Millimeters (mm)</button>
+          <button class="is_active">Millimeters (mm)</button>
           <button>Inches (in)</button>
         </div>
 
@@ -66,10 +66,22 @@
   <section class="search">
     <h1>How's the sky looking today?</h1>
 
-    <form>
+    <form class="search_form">
       <label for="search" class="sr_only">Search city</label>
-      <input type="text" name="search" id="search" placeholder="Search for a place...">
+
+      <div class="search_box">
+        <input type="text" name="search" id="search" placeholder="Search for a place...">
+
+        <div class="search_dropdown hidden">
+          <button type="button">City Name</button>
+          <button type="button">City Name</button>
+          <button type="button">City Name</button>
+          <button type="button">City Name</button>
+        </div>
+      </div>
+
       <button type="submit">Search</button>
+
     </form>
   </section>
 
@@ -181,11 +193,12 @@
         <h3>Hourly forecast</h3>
 
         <div class="dropdown_hoyrlyForecast">
-          <button class="dropdown_hoyrlyForecast_button">Tuesday<img src="assets/images/icon-dropdown.svg" alt="icon-dropdown"></button>
+          <button class="dropdown_hoyrlyForecast_button">Tuesday<img src="assets/images/icon-dropdown.svg"
+              alt="icon-dropdown"></button>
 
           <div class="dropdown_hoyrlyForecast_menu">
             <button>Monday</button>
-            <button>Tuesday</button>
+            <button class="is_active">Tuesday</button>
             <button>Wednesday</button>
             <button>Thursday</button>
             <button>Friday</button>
@@ -245,7 +258,7 @@
   <div class="attribution">
     Coded by <a href="https://portfolio-brown-eta-66.vercel.app/" target="_blank">Mikael Torres</a>.
   </div>
-  <script src="src/script.js"></script>
+  <script type="module" src="src/js/script.js"></script>
 </body>
 
 </html>

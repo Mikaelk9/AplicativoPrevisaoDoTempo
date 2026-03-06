@@ -78,7 +78,73 @@ header {
 .search form {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    gap: 0.5rem;
+}
+
+.search input {
+    flex: 1;
+    width: 100%;
+}
+
+
+.search_box {
+    position: relative;
+    flex: 1;
+    width: 100%;
+
+}
+
+.search_box input {
+    width: 100%;
+}
+
+.search_dropdown {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 1px;
+    align-items: stretch;
+
+    background: var(--Neutral800);
+    border-radius: 10px;
+    padding: 0.5rem;
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: 0.15s ease;
+}
+
+.search_dropdown button {
+    all: unset;
+
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px;
+    font-family: var(--DMSans);
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+.search_dropdown button:hover {
+    outline: 1px solid var(--Neutral600);
+    background-color: var(--Neutral700);
+    cursor: pointer;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
 }
 
 form input {
@@ -91,6 +157,7 @@ form input {
     color: var(--Neutral0);
     font-size: 1.1rem;
     text-indent: 1rem;
+    cursor: pointer;
 }
 
 form button {
@@ -104,7 +171,14 @@ form button {
     font-size: 1.1rem;
     cursor: pointer;
     margin-bottom: 1rem;
+    transition: 0.3s;
 }
+
+form button:hover {
+    background-color: var(--Blue700);
+}
+
+
 
 /*article temp*/
 .temp {
@@ -294,85 +368,94 @@ form button {
 .hourlyForecast_card img {
     height: 2.5rem;
 }
+
 /*dropdown hourlyForecast*/
 .dropdown_hoyrlyForecast {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown_hoyrlyForecast_menu {
-  position: absolute;
-  top: 140%;
-  right: 0;
+    position: absolute;
+    top: 140%;
+    right: 0;
 
-  background: var(--Neutral800);
-  border: 1px solid var(--Neutral600);
-  border-radius: 10px;
-  padding: 0.5rem;
-  width: 150px;
+    background: var(--Neutral800);
+    border: 1px solid var(--Neutral600);
+    border-radius: 10px;
+    padding: 0.5rem;
+    width: 150px;
 
-  display: flex;
-  flex-direction: column;
-  font-family: var(--DMSans);
-  font-size: 0.8rem;
-  gap: 0.1rem;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--DMSans);
+    font-size: 0.8rem;
+    gap: 0.1rem;
 
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px);
-  transition: 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: 0.2s ease;
 }
+
 .dropdown_hoyrlyForecast.open .dropdown_hoyrlyForecast_menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
-.dropdown_hoyrlyForecast_menu button{
+
+.dropdown_hoyrlyForecast_menu button {
     all: unset;
     padding: 0.5rem;
-    border-radius:10px;
+    border-radius: 10px;
     cursor: pointer;
+}
+.dropdown_hoyrlyForecast_menu button.is_active{
+    background-color: var(--Neutral700);
 }
 
 /* Dropdown_units*/
 
 .dropdown_units {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown_menu_units {
-  position: absolute;
-  top: 120%;
-  right: 0;
+    position: absolute;
+    top: 120%;
+    right: 0;
 
-  background: var(--Neutral800);
-  border: 1px solid var(--Neutral600);
-  border-radius: 10px;
-  padding: 1rem;
-  width: 180px;
+    background: var(--Neutral800);
+    border: 1px solid var(--Neutral600);
+    border-radius: 10px;
+    padding: 1rem;
+    width: 180px;
 
-  opacity: 0; 
-  visibility: hidden; 
-  transform: translateY(-8px);
-  transition: 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: 0.2s ease;
+    z-index: 1;
 }
+
 .dropdown_units.open .dropdown_menu_units {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-.dropdown_menu_units h2{
+.dropdown_menu_units h2 {
     font-size: 1.1rem;
     font-family: var(--DMSans);
     font-weight: 500;
     margin-bottom: 1rem;
-    
+
 }
+
 .dropdown_menu_units_temperature h3,
 .dropdown_menu_units_windSpeed h3,
-.dropdown_menu_units_precipitation h3{
+.dropdown_menu_units_precipitation h3 {
     font-size: 0.9rem;
     font-family: var(--DMSans);
     font-weight: 300;
@@ -382,24 +465,27 @@ form button {
 
 .dropdown_menu_units_temperature,
 .dropdown_menu_units_windSpeed,
-.dropdown_menu_units_precipitation{
+.dropdown_menu_units_precipitation {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
 }
+
 .dropdown_menu_units_temperature,
-.dropdown_menu_units_windSpeed{
+.dropdown_menu_units_windSpeed {
     border-bottom: 1px solid var(--Neutral600);
     margin-bottom: 0.5rem;
 }
+
 .dropdown_menu_units_temperature button:nth-of-type(2),
-.dropdown_menu_units_windSpeed button:nth-of-type(2){
+.dropdown_menu_units_windSpeed button:nth-of-type(2) {
     margin-bottom: 0.5rem;
 
 }
+
 .dropdown_menu_units_temperature button,
 .dropdown_menu_units_windSpeed button,
-.dropdown_menu_units_precipitation button{
+.dropdown_menu_units_precipitation button {
     display: flex;
     justify-content: space-between;
     padding: 0.5rem 0.4rem;
@@ -411,6 +497,25 @@ form button {
     font-family: var(--DMSans);
     font-weight: 300;
     cursor: pointer;
+}
+
+.dropdown_menu_units button.is_active,
+.dropdown_menu_units_windSpeed button.is_active,
+.dropdown_menu_units_precipitation button.is_active {
+    background: var(--Neutral700);
+}
+.dropdown_menu_units button.is_active::after,
+.dropdown_menu_units_windSpeed button.is_active::after,
+.dropdown_menu_units_precipitation button.is_active::after {
+    content: "";
+    display: inline-block;
+
+    width: 14px;
+    height: 14px;
+
+    background-image: url("../assets/images/icon-checkmark.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 /*rodape*/
@@ -433,7 +538,10 @@ form button {
     }
 
 
+
+
 }
+
 @media (min-width: 1200px) {
     .mainContent {
         display: grid;
@@ -465,29 +573,39 @@ form button {
         margin-top: 0;
     }
 
+
+    .search h1 {
+        font-size: 4rem;
+    }
+
+    .search_dropdown button {
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+    }
+
     .search {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    .search h1 {
-        font-size: 4rem;
-    }
-
     .search form {
         display: flex;
         flex-direction: row;
+        align-items: stretch;
         gap: 1rem;
-        max-width: 750px;
         width: 100%;
+        max-width: 600px;
     }
 
-    .search form input {
+    .search_box {
+        position: relative;
         flex: 1;
+        min-width: 0;
     }
 
-    .search form button {
+    form button[type="submit"] {
         width: 120px;
     }
 
@@ -501,4 +619,3 @@ form button {
         gap: 0.8rem;
     }
 }
-
