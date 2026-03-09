@@ -1,5 +1,7 @@
+import { renderCurrentWeather } from "./ui.js";
+
 export async function getCoordinates(city) {
-  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`;
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=4&language=en&format=json`;
 
   const response = await fetch(url);
   const data = await response.json();
@@ -8,12 +10,12 @@ export async function getCoordinates(city) {
     throw new Error("City not found");
   }
 
-  return {
-    name: data.results[0].name,
-    latitude: data.results[0].latitude,
-    longitude: data.results[0].longitude,
-    country: data.results[0].country
-  };
+  return data.results.map(city => ({
+    name: city.name,
+    latitude: city.latitude,
+    longitude: city.longitude,
+    country: city.country
+  }));
 }
 
 export async function getWeather(lat, lon) {
@@ -22,4 +24,27 @@ export async function getWeather(lat, lon) {
 
   const response = await fetch(url);
   return await response.json();
+}
+
+export async function searchCity(city) {
+
+  try {
+
+    const cities = await getCoordinates(city);
+
+    const coords = cities[0]; 
+
+    const weather = await getWeather(
+      coords.latitude,
+      coords.longitude
+    );
+
+    renderCurrentWeather(coords, weather);
+
+  } catch (error) {
+
+    console.error(error.message);
+
+  }
+
 }

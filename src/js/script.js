@@ -100,28 +100,76 @@ dropdown.addEventListener('click', (e) => {
     dropdown.classList.add('hidden');
   }
 });
-if (results.length > 0) {
-  dropdown.classList.remove('hidden');
-}
 
 
-/*api*/ 
-import { getCoordinates, getWeather } from "./api.js";
 
-async function searchCity(city) {
-  try {
-    const coords = await getCoordinates(city);
-    const weather = await getWeather(
-      coords.latitude,
-      coords.longitude
-    );
+/*api*/
+import { getCoordinates, getWeather, searchCity } from "./api.js";
 
-    console.log(coords);
-    console.log(weather);
+const form = document.querySelector(".search_form");
+const inputSearch = document.querySelector("#search");
 
-  } catch (error) {
-    console.error(error.message);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const city = inputSearch.value.trim();
+
+  if (!city) return;
+
+  searchCity(city);
+})
+
+export function renderCitySuggestions(cities) {
+
+  const dropdown = document.querySelector(".search_dropdown");
+
+  dropdown.innerHTML = "";
+
+  if (!cities.length) {
+    dropdown.classList.add("hidden");
+    return;
   }
+
+  dropdown.classList.remove("hidden");
+
+  cities.forEach(city => {
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.textContent = `${city.name}, ${city.country}`;
+
+    dropdown.appendChild(button);
+
+  });
+
 }
 
-searchCity("Berlin");
+let timeout;
+
+input.addEventListener("input", () => {
+
+  clearTimeout(timeout);
+
+  timeout = setTimeout(async () => {
+
+    const city = input.value.trim();
+
+    if (city.length < 2) {
+      renderCitySuggestions([]);
+      return;
+    }
+
+    try {
+
+      const cities = await getCoordinates(city);
+
+      renderCitySuggestions(cities);
+
+    } catch { }
+
+  }, 300);
+
+});
+
+
