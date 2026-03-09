@@ -20,7 +20,11 @@ export async function getCoordinates(city) {
 
 export async function getWeather(lat, lon) {
   const url =
-    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+`https://api.open-meteo.com/v1/forecast?
+latitude=${lat}&longitude=${lon}
+&current_weather=true
+&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation
+&timezone=auto`;
 
   const response = await fetch(url);
   return await response.json();
