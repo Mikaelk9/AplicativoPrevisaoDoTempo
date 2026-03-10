@@ -82,46 +82,40 @@ function getWeatherIcon(code) {
 /* Daily forecast */
 export function renderDailyForecast(weather) {
 
-  const list = document.querySelector(".dailyForecast_list");
+    const list = document.querySelector(".dailyForecast_list");
 
-  list.innerHTML = "";
+    list.innerHTML = "";
 
-  const days = weather.daily.time;
-  const maxTemps = weather.daily.temperature_2m_max;
-  const minTemps = weather.daily.temperature_2m_min;
-  const codes = weather.daily.weathercode;
+    const days = weather.daily.time;
+    const maxTemps = weather.daily.temperature_2m_max;
+    const minTemps = weather.daily.temperature_2m_min;
+    const codes = weather.daily.weathercode;
 
-  for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) {
 
-    const date = new Date(days[i]);
+        const date = new Date(days[i] + "T00:00");
 
-    let weekday;
+        const weekday =
+            i === 0
+                ? "Today"
+                : date.toLocaleDateString("en-US", { weekday: "short" });
 
-    if (i === 0) {
-      weekday = "Today";
-    } else {
-      weekday = date.toLocaleDateString("en-US", {
-        weekday: "short"
-      });
+        const icon = getWeatherIcon(codes[i]);
+
+        const card = document.createElement("li");
+
+        card.classList.add("dailyForecast_card");
+
+        card.innerHTML = `
+    <h3>${weekday}</h3>
+    <img src="assets/images/${icon}">
+    <div class="dailyForecast_cardNumber">
+      <p>${Math.round(maxTemps[i])}°</p>
+      <p>${Math.round(minTemps[i])}°</p>
+    </div>
+  `;
+
+        list.appendChild(card);
+
     }
-
-    const icon = getWeatherIcon(codes[i]);
-
-    const card = document.createElement("li");
-
-    card.classList.add("dailyForecast_card");
-
-    card.innerHTML = `
-      <h3>${weekday}</h3>
-      <img src="assets/images/${icon}">
-      <div class="dailyForecast_cardNumber">
-        <p>${Math.round(maxTemps[i])}°</p>
-        <p>${Math.round(minTemps[i])}°</p>
-      </div>
-    `;
-
-    list.appendChild(card);
-
-  }
-
 }
