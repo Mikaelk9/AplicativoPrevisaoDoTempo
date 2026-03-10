@@ -1,4 +1,5 @@
 import { renderCurrentWeather } from "./ui.js";
+import { renderDailyForecast } from "./ui.js";
 
 export async function getCoordinates(city) {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=4&language=en&format=json`;
@@ -24,6 +25,7 @@ export async function getWeather(lat, lon) {
 latitude=${lat}&longitude=${lon}
 &current_weather=true
 &hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation
+&daily=temperature_2m_max,temperature_2m_min,weathercode
 &timezone=auto`;
 
   const response = await fetch(url);
@@ -42,7 +44,8 @@ export async function searchCity(city) {
       coords.latitude,
       coords.longitude
     );
-    
+
+    renderDailyForecast(weather);
     renderCurrentWeather(coords, weather);
 
   } catch (error) {

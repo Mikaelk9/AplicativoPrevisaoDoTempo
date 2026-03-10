@@ -55,26 +55,67 @@ export function renderCurrentWeather(coords, weather) {
     precipitationElement.textContent =
         `${precipitation} mm`;
 
-   
+
 }
 
 
 function getWeatherIcon(code) {
 
-  if (code === 0) return "icon-sunny.webp";
+    if (code === 0) return "icon-sunny.webp";
 
-  if (code <= 3) return "icon-partly-cloudy.webp";
+    if (code <= 3) return "icon-partly-cloudy.webp";
 
-  if (code >= 45 && code <= 48) return "icon-fog.webp";
+    if (code >= 45 && code <= 48) return "icon-fog.webp";
 
-  if (code >= 51 && code <= 55) return "icon-drizzle.webp";
+    if (code >= 51 && code <= 55) return "icon-drizzle.webp";
 
-  if (code >= 61 && code <= 65) return "icon-rain.webp";
+    if (code >= 61 && code <= 65) return "icon-rain.webp";
 
-  if (code >= 71 && code <= 75) return "icon-snow.webp";
+    if (code >= 71 && code <= 75) return "icon-snow.webp";
 
-  if (code >= 95) return "icon-storm.webp";
+    if (code >= 95) return "icon-storm.webp";
 
-  return "icon-overcast.webp";
+    return "icon-overcast.webp";
+
+}
+
+/* Daily forecast */
+export function renderDailyForecast(weather) {
+
+    
+    const list = document.querySelector(".dailyForecast_list");
+
+    list.innerHTML = "";
+
+    const days = weather.daily.time;
+    const maxTemps = weather.daily.temperature_2m_max;
+    const minTemps = weather.daily.temperature_2m_min;
+    const codes = weather.daily.weathercode;
+
+    days.forEach((day, index) => {
+
+        const date = new Date(day);
+
+        const weekday =
+            date.toLocaleDateString("en-US", { weekday: "short" });
+
+        const icon = getWeatherIcon(codes[index]);
+
+        const card = document.createElement("li");
+
+        card.classList.add("dailyForecast_card");
+
+        card.innerHTML = `
+      <h3>${weekday}</h3>
+      <img src="assets/images/${icon}">
+      <div class="dailyForecast_cardNumber">
+        <p>${Math.round(maxTemps[index])}°</p>
+        <p>${Math.round(minTemps[index])}°</p>
+      </div>
+    `;
+
+        list.appendChild(card);
+
+    });
 
 }
