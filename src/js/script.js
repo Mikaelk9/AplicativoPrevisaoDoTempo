@@ -168,7 +168,7 @@ input.addEventListener("input", () => {
 
     } catch { }
 
-  }, 300);
+  }, 200);
 
 });
 

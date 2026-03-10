@@ -42,7 +42,7 @@ export async function searchCity(city) {
       coords.latitude,
       coords.longitude
     );
-
+    
     renderCurrentWeather(coords, weather);
 
   } catch (error) {

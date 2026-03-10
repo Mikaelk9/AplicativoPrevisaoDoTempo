@@ -9,6 +9,11 @@ export function renderCurrentWeather(coords, weather) {
     const windElement = document.querySelector(".wind");
     const precipitationElement = document.querySelector(".precipitation");
 
+    const iconElement = document.querySelector('.temp_number img');
+    const weatherCode = weather.current_weather.weathercode;
+    const icon = getWeatherIcon(weatherCode)
+    iconElement.src = `assets/images/${icon}`;
+
     cityElement.textContent = `${coords.name}, ${coords.country}`;
 
     const temperature = weather.current_weather.temperature;
@@ -49,4 +54,27 @@ export function renderCurrentWeather(coords, weather) {
 
     precipitationElement.textContent =
         `${precipitation} mm`;
+
+   
+}
+
+
+function getWeatherIcon(code) {
+
+  if (code === 0) return "icon-sunny.webp";
+
+  if (code <= 3) return "icon-partly-cloudy.webp";
+
+  if (code >= 45 && code <= 48) return "icon-fog.webp";
+
+  if (code >= 51 && code <= 55) return "icon-drizzle.webp";
+
+  if (code >= 61 && code <= 65) return "icon-rain.webp";
+
+  if (code >= 71 && code <= 75) return "icon-snow.webp";
+
+  if (code >= 95) return "icon-storm.webp";
+
+  return "icon-overcast.webp";
+
 }
