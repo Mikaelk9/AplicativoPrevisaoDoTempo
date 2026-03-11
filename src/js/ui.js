@@ -119,3 +119,61 @@ export function renderDailyForecast(weather) {
 
     }
 }
+
+/* Hourly forecast */
+export function renderHourlyForecast(weather) {
+
+    const list = document.querySelector(".hourlyForecast_list");
+
+    list.innerHTML = "";
+
+    const times = weather.hourly.time;
+    const temps = weather.hourly.temperature_2m;
+    const codes = weather.hourly.weathercode;
+
+    const now = new Date(weather.current_weather.time);
+    const currentHour = now.getHours();
+
+    let startIndex = 0;
+
+    for (let i = 0; i < times.length; i++) {
+
+        const hour = new Date(times[i]).getHours();
+
+        if (hour === currentHour) {
+            startIndex = i;
+            break;
+        }
+
+    }
+
+    for (let i = startIndex; i < startIndex + 8; i++) {
+
+        const time = new Date(times[i]);
+
+        const hour =
+            i === startIndex
+                ? "Now"
+                : time.toLocaleTimeString("en-US", {
+                    hour: "numeric"
+                });
+
+        const icon = getWeatherIcon(codes[i]);
+
+        const card = document.createElement("li");
+
+        card.classList.add("hourlyForecast_card");
+
+        card.innerHTML = `
+      <p>
+        <img src="assets/images/${icon}" alt="weather icon">
+        ${hour}
+      </p>
+      <p>${Math.round(temps[i])}°</p>
+    `;
+
+        list.appendChild(card);
+
+    }
+
+}

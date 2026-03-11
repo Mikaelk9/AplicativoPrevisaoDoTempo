@@ -106,6 +106,7 @@ dropdown.addEventListener('click', (e) => {
 /*api*/
 import { getCoordinates, getWeather, searchCity } from "./api.js";
 
+
 const form = document.querySelector(".search_form");
 const inputSearch = document.querySelector("#search");
 

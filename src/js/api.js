@@ -1,5 +1,5 @@
-import { renderCurrentWeather } from "./ui.js";
-import { renderDailyForecast } from "./ui.js";
+import { renderCurrentWeather, renderDailyForecast, renderHourlyForecast } from "./ui.js";
+
 
 export async function getCoordinates(city) {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=4&language=en&format=json`;
@@ -24,7 +24,7 @@ export async function getWeather(lat, lon) {
 `https://api.open-meteo.com/v1/forecast?
 latitude=${lat}&longitude=${lon}
 &current_weather=true
-&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation
+&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weathercode
 &daily=temperature_2m_max,temperature_2m_min,weathercode
 &timezone=auto`;
 
@@ -45,8 +45,9 @@ export async function searchCity(city) {
       coords.longitude
     );
 
-    renderDailyForecast(weather);
     renderCurrentWeather(coords, weather);
+    renderDailyForecast(weather);
+    renderHourlyForecast(weather);
 
   } catch (error) {
 
