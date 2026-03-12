@@ -1,3 +1,11 @@
+import {
+    convertTemperature,
+    convertWind,
+    convertPrecipitation,
+    units
+} from "./units.js"
+
+
 export function renderCurrentWeather(coords, weather) {
 
     const cityElement = document.querySelector(".temp h2");
@@ -18,7 +26,8 @@ export function renderCurrentWeather(coords, weather) {
 
     const temperature = weather.current_weather.temperature;
 
-    tempElement.textContent = `${Math.round(temperature)}°`;
+
+    tempElement.textContent = `${convertTemperature(temperature)}°`;
 
     const today = new Date();
 
@@ -37,24 +46,25 @@ export function renderCurrentWeather(coords, weather) {
     const humidity =
         weather.hourly.relative_humidity_2m[0];
 
-    const precipitation =
-        weather.hourly.precipitation[0];
-
-    const wind =
-        weather.current_weather.windspeed;
-
     feelsLikeElement.textContent =
-        `${Math.round(feelsLike)}°`;
+        `${convertTemperature(feelsLike)}°`
 
     humidityElement.textContent =
         `${humidity}%`;
 
+    const wind =
+        weather.current_weather.windspeed;
+    const windUnit =
+        units.wind === "kmh" ? "km/h" : "mph";
     windElement.textContent =
-        `${wind} km/h`;
+        `${convertWind(wind)} ${windUnit}`;
 
+    const precipitation =
+        weather.hourly.precipitation[0];
+    const precipitationUnit =
+        units.precipitation === "mm" ? "mm" : "in";
     precipitationElement.textContent =
-        `${precipitation} mm`;
-
+        `${convertPrecipitation(precipitation)} ${precipitationUnit}`;
 
 }
 
@@ -110,8 +120,8 @@ export function renderDailyForecast(weather) {
     <h3>${weekday}</h3>
     <img src="assets/images/${icon}">
     <div class="dailyForecast_cardNumber">
-      <p>${Math.round(maxTemps[i])}°</p>
-      <p>${Math.round(minTemps[i])}°</p>
+      <p>${convertTemperature(maxTemps[i])}°</p>
+      <p>${convertTemperature(minTemps[i])}°</p>
     </div>
   `;
 
@@ -169,7 +179,7 @@ export function renderHourlyForecast(weather) {
         <img src="assets/images/${icon}" alt="weather icon">
         ${hour}
       </p>
-      <p>${Math.round(temps[i])}°</p>
+      <p>${convertTemperature(temps[i])}°</p>
     `;
 
         list.appendChild(card);

@@ -11,7 +11,7 @@ document.addEventListener('click', (event) => {
   document.querySelectorAll('.dropdown_units').forEach(dropdown => {
     if (!dropdown.contains(event.target)) {
       dropdown.classList.remove('open');
-      const button = dropdown.querySelector('.dropdown__toggle');
+      const button = dropdown.querySelector('.dropdown_toggle');
       button.setAttribute('aria-expanded', false);
     }
   });
@@ -107,18 +107,34 @@ dropdown.addEventListener('click', (e) => {
 import { getCoordinates, getWeather, searchCity } from "./api.js";
 
 
+
 const form = document.querySelector(".search_form");
 const inputSearch = document.querySelector("#search");
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
+
   e.preventDefault();
 
   const city = inputSearch.value.trim();
 
   if (!city) return;
 
-  searchCity(city);
-})
+  try {
+
+    const { coords, weather } = await searchCity(city);
+
+    lastCoords = coords;
+    lastWeather = weather;
+
+    updateWeatherUI();
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+});
 
 export function renderCitySuggestions(cities) {
 
@@ -173,4 +189,49 @@ input.addEventListener("input", () => {
 
 });
 
+import {
+  renderCurrentWeather,
+  renderDailyForecast,
+  renderHourlyForecast
+} from "./ui.js";
 
+import { units } from "./units.js";
+
+let lastCoords = null;
+let lastWeather = null;
+
+function updateWeatherUI() {
+
+  if (!lastWeather || !lastCoords) return;
+
+  renderCurrentWeather(lastCoords, lastWeather);
+  renderDailyForecast(lastWeather);
+  renderHourlyForecast(lastWeather);
+
+}
+
+
+/* Botões units */
+document.querySelectorAll("[data-unit]").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const unit = button.dataset.unit;
+
+    if (unit === "c" || unit === "f") {
+      units.temperature = unit;
+    }
+
+    if (unit === "kmh" || unit === "mph") {
+      units.wind = unit;
+    }
+
+    if (unit === "mm" || unit === "inch") {
+      units.precipitation = unit;
+    }
+
+    updateWeatherUI();
+
+  });
+
+});

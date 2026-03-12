@@ -34,25 +34,15 @@ latitude=${lat}&longitude=${lon}
 
 export async function searchCity(city) {
 
-  try {
+  const cities = await getCoordinates(city);
 
-    const cities = await getCoordinates(city);
+  const coords = cities[0];
 
-    const coords = cities[0]; 
+  const weather = await getWeather(
+    coords.latitude,
+    coords.longitude
+  );
 
-    const weather = await getWeather(
-      coords.latitude,
-      coords.longitude
-    );
-
-    renderCurrentWeather(coords, weather);
-    renderDailyForecast(weather);
-    renderHourlyForecast(weather);
-
-  } catch (error) {
-
-    console.error(error.message);
-
-  }
+  return { coords, weather };
 
 }
