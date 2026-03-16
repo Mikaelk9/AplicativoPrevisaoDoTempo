@@ -109,6 +109,7 @@ header {
     flex-direction: column;
     gap: 1px;
     align-items: stretch;
+    z-index: 1;
 
     background: var(--Neutral800);
     border-radius: 10px;
@@ -549,20 +550,125 @@ form button:hover {
     color: var(--Blue500);
 }
 
+/*Loader*/
+.loader_dots{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+}
+
+.loader_dots span{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:white;
+  display:block;
+  animation: bounce 1.2s infinite;
+}
+
+.loader_dots span:nth-child(2){
+  animation-delay:0.2s;
+}
+
+.loader_dots span:nth-child(3){
+  animation-delay:0.4s;
+}
+
+@keyframes bounce{
+  0%,80%,100%{
+    transform:scale(0);
+  }
+  40%{
+    transform:scale(1);
+  }
+}
+
+/*Estado de loading*/
+.temp{
+  position: relative;
+}
+
+.temp.is_loading::after{
+  content: "Loading...";
+  position: absolute;
+  inset: 0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-family: var(--DMSans);
+  font-size: 1.2rem;
+
+  background: rgba(0,0,0,0.35);
+  border-radius: 1rem;
+}
+
+/*Erro state*/
+.error_state{
+  position: absolute;
+  inset: 0;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  text-align: center;
+  background:#02022b;
+  z-index:10;
+
+  grid-column: 1 / -1;
+}
+.error_content{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+}
+.error_state > img{
+    margin-bottom: 1rem;
+    height: 1.8rem;
+}
+.error_content h2{
+    font-family: var(--DMSans);
+    font-weight: 600;
+    font-size: 2.3rem;
+    margin-bottom: 1rem;
+}
+.error_content p{
+    font-family: var(--DMSans);
+    color: var(--Neutral300);
+    margin-bottom: 1rem;
+}
+.error_state button{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    background: var(--Neutral800);
+    color: var(--Neutral0);
+    font-family: var(--DMSans);
+    font-weight: 300;
+    cursor: pointer;
+    gap: 0.5rem;
+    
+}
+.error_state button img{
+    display:block;
+    height: 1rem;
+}
+
 @media (min-width: 800px) {
     .dailyForecast_list {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
         gap: 1rem;
     }
-
-
-
-
 }
 
 @media (min-width: 1200px) {
     .mainContent {
+        position:relative;
         display: grid;
         grid-template-columns: 2fr 1fr;
         gap: 2rem;

@@ -56,7 +56,7 @@ document.addEventListener('click', (event) => {
   document.querySelectorAll('.dropdown_hoyrlyForecast').forEach(dropdown => {
     if (!dropdown.contains(event.target)) {
       dropdown.classList.remove('open');
-      const button = dropdown.querySelector('.button_hourlyForecast');
+      const button = dropdown.querySelector('.dropdown_hoyrlyForecast_button');
       button.setAttribute('aria-expanded', false);
     }
   });
@@ -119,6 +119,9 @@ form.addEventListener("submit", async (e) => {
 
   if (!city) return;
 
+  hideError();
+  showLoading();
+
   try {
 
     const { coords, weather } = await searchCity(city);
@@ -130,7 +133,11 @@ form.addEventListener("submit", async (e) => {
 
   } catch (error) {
 
-    console.error(error);
+    showError();
+
+  } finally {
+
+    hideLoading();
 
   }
 
@@ -259,5 +266,71 @@ document.querySelectorAll("[data-unit]").forEach(button => {
     updateWeatherUI();
 
   });
+
+});
+
+/*Loader */
+const errorState = document.querySelector(".error_state");
+const minLeft = document.querySelector(".minLeft");
+const hourlyForecast = document.querySelector(".hourlyForecast");
+const tempCard = document.querySelector(".temp");
+const retryButton = document.querySelector(".retry_button");
+
+function showLoading(){
+  tempCard.classList.add("is_loading");
+}
+
+function hideLoading(){
+  tempCard.classList.remove("is_loading");
+}
+
+function showError(){
+
+  errorState.classList.remove("hidden");
+
+  minLeft.classList.add("hidden");
+  hourlyForecast.classList.add("hidden");
+
+}
+
+function hideError(){
+
+  errorState.classList.add("hidden");
+
+  minLeft.classList.remove("hidden");
+  hourlyForecast.classList.remove("hidden");
+
+}
+
+retryButton.addEventListener("click", async () => {
+
+  if(!lastCoords){
+
+    
+    hideError();
+
+    return;
+  }
+
+  hideError();
+  showLoading();
+
+  try {
+
+    const weather = await getWeatherByCoords(lastCoords);
+
+    lastWeather = weather;
+
+    updateWeatherUI();
+
+  } catch (error) {
+
+    showError();
+
+  } finally {
+
+    hideLoading();
+
+  }
 
 });
