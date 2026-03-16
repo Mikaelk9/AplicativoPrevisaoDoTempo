@@ -1,6 +1,33 @@
-/* convertTemperature  */
+const STORAGE_KEY = "weather_units";
 
-export const units = {
+function loadUnits() {
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+
+  if (!stored) return null;
+
+  try {
+    return JSON.parse(stored);
+  } catch {
+    return null;
+  }
+
+}
+
+export function saveUnits() {
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(units)
+  );
+
+}
+
+
+/* convertTemperature  */
+const savedUnits = loadUnits();
+
+export const units = savedUnits || {
   temperature: "c",
   wind: "kmh",
   precipitation: "mm"

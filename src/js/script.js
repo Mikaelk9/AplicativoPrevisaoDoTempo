@@ -195,7 +195,29 @@ import {
   renderHourlyForecast
 } from "./ui.js";
 
-import { units } from "./units.js";
+import { units, saveUnits } from "./units.js";
+
+function applySavedUnits() {
+
+  document.querySelectorAll("[data-unit]").forEach(button => {
+
+    const unit = button.dataset.unit;
+
+    if (
+      unit === units.temperature ||
+      unit === units.wind ||
+      unit === units.precipitation
+    ) {
+      button.classList.add("is_active");
+    } else {
+      button.classList.remove("is_active");
+    }
+
+  });
+
+}
+
+applySavedUnits();
 
 let lastCoords = null;
 let lastWeather = null;
@@ -218,17 +240,21 @@ document.querySelectorAll("[data-unit]").forEach(button => {
 
     const unit = button.dataset.unit;
 
-    if (unit === "c" || unit === "f") {
+    const container = button.closest("div");
+
+    if (container.classList.contains("dropdown_menu_units_temperature")) {
       units.temperature = unit;
     }
 
-    if (unit === "kmh" || unit === "mph") {
+    if (container.classList.contains("dropdown_menu_units_windSpeed")) {
       units.wind = unit;
     }
 
-    if (unit === "mm" || unit === "inch") {
+    if (container.classList.contains("dropdown_menu_units_precipitation")) {
       units.precipitation = unit;
     }
+
+    saveUnits();
 
     updateWeatherUI();
 
