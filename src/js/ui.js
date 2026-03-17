@@ -131,59 +131,161 @@ export function renderDailyForecast(weather) {
 }
 
 /* Hourly forecast */
-export function renderHourlyForecast(weather) {
+export function renderHourlyForecastByDay(dayData, nextDayData = []) {
+  const list = document.querySelector(".hourlyForecast_list");
 
-    const list = document.querySelector(".hourlyForecast_list");
+  list.innerHTML = "";
 
-    list.innerHTML = "";
+  const nowHour = new Date().getHours();
 
-    const times = weather.hourly.time;
-    const temps = weather.hourly.temperature_2m;
-    const codes = weather.hourly.weathercode;
+  let startIndex = dayData.findIndex(item => {
+  const itemDate = new Date(item.time);
+  const now = new Date();
 
-    const now = new Date(weather.current_weather.time);
-    const currentHour = now.getHours();
+  return (
+    itemDate.getHours() === now.getHours() &&
+    itemDate.getDate() === now.getDate()
+  );
+});
 
-    let startIndex = 0;
+if (startIndex === -1) {
+  startIndex = 0;
+}
 
-    for (let i = 0; i < times.length; i++) {
+const today = new Date().toISOString().split("T")[0];
+const currentDay = dayData[0].time.split("T")[0];
 
-        const hour = new Date(times[i]).getHours();
+let slice = [];
 
-        if (hour === currentHour) {
-            startIndex = i;
-            break;
-        }
+if (currentDay === today) {
+  
+  let startIndex = dayData.findIndex(item => {
+    const itemDate = new Date(item.time);
+    const now = new Date();
 
-    }
+    return (
+      itemDate.getHours() === now.getHours() &&
+      itemDate.getDate() === now.getDate()
+    );
+  });
 
-    for (let i = startIndex; i < startIndex + 8; i++) {
+  if (startIndex === -1) startIndex = 0;
 
-        const time = new Date(times[i]);
+  slice = dayData.slice(startIndex);
 
-        const hour =
-            i === startIndex
-                ? "Now"
-                : time.toLocaleTimeString("en-US", {
-                    hour: "numeric"
-                });
+  if (slice.length < 8 && nextDayData.length) {
+    const missing = 8 - slice.length;
+    const nextSlice = nextDayData.slice(0, missing);
+    slice = slice.concat(nextSlice);
+  }
 
-        const icon = getWeatherIcon(codes[i]);
+  slice = slice.slice(0, 8);
 
-        const card = document.createElement("li");
+} else {
 
-        card.classList.add("hourlyForecast_card");
+  slice = dayData.filter(item => {
+    const hour = new Date(item.time).getHours();
 
-        card.innerHTML = `
+    return hour >= 8 && hour <= 22 && hour % 2 === 0;
+  }).slice(0, 8);
+}
+
+slice = slice.slice(0, 8);
+
+  slice.forEach((item, index) => {
+    const time = new Date(item.time);
+
+    const isNow =
+      index === 0 &&
+      new Date().toISOString().split("T")[0] === item.time.split("T")[0];
+
+    const hour = isNow
+      ? "Now"
+      : time.toLocaleTimeString("en-US", { hour: "numeric" });
+
+    const icon = getWeatherIcon(item.code);
+
+    const card = document.createElement("li");
+
+    card.classList.add("hourlyForecast_card");
+
+    card.innerHTML = `
       <p>
-        <img src="assets/images/${icon}" alt="weather icon">
+        <img src="assets/images/${icon}">
         ${hour}
       </p>
-      <p>${convertTemperature(temps[i])}°</p>
+      <p>${convertTemperature(item.temp)}°</p>
     `;
 
-        list.appendChild(card);
+    list.appendChild(card);
+  });
+}
 
+export function groupHourlyByDay(hourly) {
+  const grouped = {};
+
+  const { time, temperature_2m, weathercode, precipitation } = hourly;
+
+  for (let i = 0; i < time.length; i++) {
+    const date = time[i].split("T")[0]; // "2026-03-17"
+
+    if (!grouped[date]) {
+      grouped[date] = [];
     }
 
+    grouped[date].push({
+      time: time[i],
+      temp: temperature_2m[i],
+      code: weathercode[i],
+      precipitation: precipitation[i]
+    });
+  }
+
+  return grouped;
+}
+
+export function sortDays(grouped) {
+  const today = new Date().toISOString().split("T")[0];
+
+  return Object.keys(grouped).sort((a, b) => {
+    if (a === today) return -1;
+    if (b === today) return 1;
+    return new Date(a) - new Date(b);
+  });
+}
+
+export function formatDayLabel(dateStr) {
+  const today = new Date().toISOString().split("T")[0];
+
+  if (dateStr === today) return "Today";
+
+  const date = new Date(dateStr + "T00:00");
+
+  return date.toLocaleDateString("en-US", {
+    weekday: "long"
+  });
+}
+
+export function renderHourlyDropdown(days, activeDay, onSelect) {
+  const menu = document.querySelector(".dropdown_hourlyForecast_menu");
+  const button = document.querySelector(".dropdown_hourlyForecast_button");
+
+  menu.innerHTML = "";
+
+  days.forEach(day => {
+    const btn = document.createElement("button");
+
+    btn.textContent = formatDayLabel(day);
+
+    if (day === activeDay) {
+      btn.classList.add("is_active");
+      button.textContent = formatDayLabel(day);
+    }
+
+    btn.addEventListener("click", () => {
+      onSelect(day);
+    });
+
+    menu.appendChild(btn);
+  });
 }

@@ -390,12 +390,12 @@ form button:hover {
 }
 
 /*dropdown hourlyForecast*/
-.dropdown_hoyrlyForecast {
+.dropdown_hourlyForecast {
     position: relative;
     display: inline-block;
 }
 
-.dropdown_hoyrlyForecast_menu {
+.dropdown_hourlyForecast_menu {
     position: absolute;
     top: 140%;
     right: 0;
@@ -418,19 +418,19 @@ form button:hover {
     transition: 0.2s ease;
 }
 
-.dropdown_hoyrlyForecast.open .dropdown_hoyrlyForecast_menu {
+.dropdown_hourlyForecast.open .dropdown_hourlyForecast_menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.dropdown_hoyrlyForecast_menu button {
+.dropdown_hourlyForecast_menu button {
     all: unset;
     padding: 0.5rem;
     border-radius: 10px;
     cursor: pointer;
 }
-.dropdown_hoyrlyForecast_menu button.is_active{
+.dropdown_hourlyForecast_menu button.is_active{
     background-color: var(--Neutral700);
 }
 

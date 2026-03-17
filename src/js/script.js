@@ -43,36 +43,22 @@ setupActiveButtons('.dropdown_menu_units_precipitation button');
 
 /*--------------------------------------------*/
 
-/*dropdown_hoyrlyForecast*/
-const dropdown_hoyrlyForecast = document.querySelector('.dropdown_hoyrlyForecast');
-const button_hourlyForecast = dropdown_hoyrlyForecast.querySelector('.dropdown_hoyrlyForecast_button');
+/*dropdown_hhourlyForecast*/
+const dropdown_hourlyForecast = document.querySelector('.dropdown_hourlyForecast');
+const button_hourlyForecast = dropdown_hourlyForecast.querySelector('.dropdown_hourlyForecast_button');
 
 button_hourlyForecast.addEventListener('click', () => {
-  const isOpen = dropdown_hoyrlyForecast.classList.toggle('open');
+  const isOpen = dropdown_hourlyForecast.classList.toggle('open');
   button_hourlyForecast.setAttribute('aria-expanded', isOpen);
 });
 
 document.addEventListener('click', (event) => {
-  document.querySelectorAll('.dropdown_hoyrlyForecast').forEach(dropdown => {
+  document.querySelectorAll('.dropdown_hourlyForecast').forEach(dropdown => {
     if (!dropdown.contains(event.target)) {
       dropdown.classList.remove('open');
-      const button = dropdown.querySelector('.dropdown_hoyrlyForecast_button');
+      const button = dropdown.querySelector('.dropdown_hourlyForecast_button');
       button.setAttribute('aria-expanded', false);
     }
-  });
-});
-
-/*dropdown_hoyrlyForecast active*/
-
-const days = document.querySelectorAll('.dropdown_hoyrlyForecast_menu button');
-
-days.forEach(day => {
-  day.addEventListener('click', () => {
-
-    days.forEach(d => d.classList.remove('is_active'));
-
-    day.classList.add('is_active');
-
   });
 });
 
@@ -105,6 +91,16 @@ dropdown.addEventListener('click', (e) => {
 
 /*api*/
 import { getCoordinates, getWeather, searchCity } from "./api.js";
+
+import {
+  groupHourlyByDay,
+  sortDays,
+  renderHourlyDropdown,
+  renderHourlyForecastByDay
+} from "./ui.js";
+
+let hourlyGrouped = null;
+let selectedDay = null;
 
 
 
@@ -199,7 +195,6 @@ input.addEventListener("input", () => {
 import {
   renderCurrentWeather,
   renderDailyForecast,
-  renderHourlyForecast
 } from "./ui.js";
 
 import { units, saveUnits } from "./units.js";
@@ -230,13 +225,44 @@ let lastCoords = null;
 let lastWeather = null;
 
 function updateWeatherUI() {
-
   if (!lastWeather || !lastCoords) return;
 
   renderCurrentWeather(lastCoords, lastWeather);
   renderDailyForecast(lastWeather);
-  renderHourlyForecast(lastWeather);
 
+  hourlyGrouped = groupHourlyByDay(lastWeather.hourly);
+
+  const days = sortDays(hourlyGrouped);
+
+  if (!selectedDay || !hourlyGrouped[selectedDay]) {
+    selectedDay = days[0];
+  }
+
+  renderHourlyDropdown(days, selectedDay, handleDayChange);
+
+  const currentIndex = days.indexOf(selectedDay);
+  const nextDay = days[currentIndex + 1];
+
+  renderHourlyForecastByDay(
+    hourlyGrouped[selectedDay],
+    hourlyGrouped[nextDay] || []
+  );
+}
+
+function handleDayChange(day) {
+  selectedDay = day;
+
+  const days = sortDays(hourlyGrouped);
+  const currentIndex = days.indexOf(day);
+
+  const nextDay = days[currentIndex + 1];
+
+  renderHourlyDropdown(days, selectedDay, handleDayChange);
+
+  renderHourlyForecastByDay(
+    hourlyGrouped[selectedDay],
+    hourlyGrouped[nextDay] || []
+  );
 }
 
 
@@ -276,15 +302,15 @@ const hourlyForecast = document.querySelector(".hourlyForecast");
 const tempCard = document.querySelector(".temp");
 const retryButton = document.querySelector(".retry_button");
 
-function showLoading(){
+function showLoading() {
   tempCard.classList.add("is_loading");
 }
 
-function hideLoading(){
+function hideLoading() {
   tempCard.classList.remove("is_loading");
 }
 
-function showError(){
+function showError() {
 
   errorState.classList.remove("hidden");
 
@@ -293,7 +319,7 @@ function showError(){
 
 }
 
-function hideError(){
+function hideError() {
 
   errorState.classList.add("hidden");
 
@@ -304,9 +330,9 @@ function hideError(){
 
 retryButton.addEventListener("click", async () => {
 
-  if(!lastCoords){
+  if (!lastCoords) {
 
-    
+
     hideError();
 
     return;

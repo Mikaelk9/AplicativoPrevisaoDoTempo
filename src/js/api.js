@@ -1,5 +1,3 @@
-import { renderCurrentWeather, renderDailyForecast, renderHourlyForecast } from "./ui.js";
-
 
 export async function getCoordinates(city) {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=4&language=en&format=json`;
@@ -44,5 +42,6 @@ export async function searchCity(city) {
   );
 
   return { coords, weather };
+  
 
 }
