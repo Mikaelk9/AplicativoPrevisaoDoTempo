@@ -1,122 +1,126 @@
 import {
-    convertTemperature,
-    convertWind,
-    convertPrecipitation,
-    units
+  convertTemperature,
+  convertWind,
+  convertPrecipitation,
+  units
 } from "./units.js"
 
 
 export function renderCurrentWeather(coords, weather) {
 
-    const cityElement = document.querySelector(".temp h2");
-    const dateElement = document.querySelector(".temp p");
-    const tempElement = document.querySelector(".tempDeg");
+  const cityElement = document.querySelector(".temp h2");
+  const dateElement = document.querySelector(".temp p");
+  const tempElement = document.querySelector(".tempDeg");
 
-    const feelsLikeElement = document.querySelector(".feels_like");
-    const humidityElement = document.querySelector(".humidity");
-    const windElement = document.querySelector(".wind");
-    const precipitationElement = document.querySelector(".precipitation");
+  const feelsLikeElement = document.querySelector(".feels_like");
+  const humidityElement = document.querySelector(".humidity");
+  const windElement = document.querySelector(".wind");
+  const precipitationElement = document.querySelector(".precipitation");
 
-    const iconElement = document.querySelector('.temp_number img');
-    const weatherCode = weather.current_weather.weathercode;
-    const icon = getWeatherIcon(weatherCode)
-    iconElement.src = `assets/images/${icon}`;
+  const iconElement = document.querySelector('.temp_number img');
+  const weatherCode = weather.current_weather.weathercode;
+  const icon = getWeatherIcon(weatherCode)
+  iconElement.src = `assets/images/${icon}`;
 
-    cityElement.textContent = `${coords.name}, ${coords.country}`;
+  cityElement.textContent = `${coords.name}, ${coords.country}`;
 
-    const temperature = weather.current_weather.temperature;
-
-
-    tempElement.textContent = `${convertTemperature(temperature)}°`;
-
-    const today = new Date();
-
-    dateElement.textContent =
-        today.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        });
+  const temperature = weather.current_weather.temperature;
 
 
-    const feelsLike =
-        weather.hourly.apparent_temperature[0];
+  tempElement.textContent = `${convertTemperature(temperature)}°`;
 
-    const humidity =
-        weather.hourly.relative_humidity_2m[0];
+  const today = new Date();
 
-    feelsLikeElement.textContent =
-        `${convertTemperature(feelsLike)}°`
+  dateElement.textContent =
+    today.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
 
-    humidityElement.textContent =
-        `${humidity}%`;
 
-    const wind =
-        weather.current_weather.windspeed;
-    const windUnit =
-        units.wind === "kmh" ? "km/h" : "mph";
-    windElement.textContent =
-        `${convertWind(wind)} ${windUnit}`;
+  const feelsLike =
+    weather.hourly.apparent_temperature[0];
 
-    const precipitation =
-        weather.hourly.precipitation[0];
-    const precipitationUnit =
-        units.precipitation === "mm" ? "mm" : "in";
-    precipitationElement.textContent =
-        `${convertPrecipitation(precipitation)} ${precipitationUnit}`;
+  const humidity =
+    weather.hourly.relative_humidity_2m[0];
+
+  feelsLikeElement.textContent =
+    `${convertTemperature(feelsLike)}°`
+
+  humidityElement.textContent =
+    `${humidity}%`;
+
+  const wind =
+    weather.current_weather.windspeed;
+  const windUnit =
+    units.wind === "kmh" ? "km/h" : "mph";
+  windElement.textContent =
+    `${convertWind(wind)} ${windUnit}`;
+
+  const precipitation =
+    weather.hourly.precipitation[0];
+  const precipitationUnit =
+    units.precipitation === "mm" ? "mm" : "in";
+  precipitationElement.textContent =
+    `${convertPrecipitation(precipitation)} ${precipitationUnit}`;
 
 }
 
 
 function getWeatherIcon(code) {
 
-    if (code === 0) return "icon-sunny.webp";
+  if (code === 0) return "icon-sunny.webp";
 
-    if (code <= 3) return "icon-partly-cloudy.webp";
+  if (code === 1 || code === 2) return "icon-partly-cloudy.webp";
 
-    if (code >= 45 && code <= 48) return "icon-fog.webp";
+  if (code === 3) return "icon-overcast.webp";
 
-    if (code >= 51 && code <= 55) return "icon-drizzle.webp";
+  if (code >= 45 && code <= 48) return "icon-fog.webp";
 
-    if (code >= 61 && code <= 65) return "icon-rain.webp";
+  if (code >= 51 && code <= 57) return "icon-drizzle.webp";
 
-    if (code >= 71 && code <= 75) return "icon-snow.webp";
+  if (
+    (code >= 61 && code <= 67) ||
+    (code >= 80 && code <= 82)
+  ) return "icon-rain.webp";
 
-    if (code >= 95) return "icon-storm.webp";
+  if (code >= 71 && code <= 77) return "icon-snow.webp";
 
-    return "icon-overcast.webp";
+  if (code >= 95) return "icon-storm.webp";
 
+  return "icon-overcast.webp";
 }
 
 /* Daily forecast */
 export function renderDailyForecast(weather) {
 
-    const list = document.querySelector(".dailyForecast_list");
+  const list = document.querySelector(".dailyForecast_list");
 
-    list.innerHTML = "";
+  list.innerHTML = "";
 
-    const days = weather.daily.time;
-    const maxTemps = weather.daily.temperature_2m_max;
-    const minTemps = weather.daily.temperature_2m_min;
-    const codes = weather.daily.weathercode;
+  const days = weather.daily.time;
+  const maxTemps = weather.daily.temperature_2m_max;
+  const minTemps = weather.daily.temperature_2m_min;
+  const codes = weather.daily.weathercode;
 
-    for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 7; i++) {
 
-        const date = new Date(days[i] + "T00:00");
+    const date = new Date(days[i] + "T00:00");
 
-        const weekday =
-            i === 0
-                ? "Today"
-                : date.toLocaleDateString("en-US", { weekday: "short" });
+    const weekday =
+      i === 0
+        ? "Today"
+        : date.toLocaleDateString("en-US", { weekday: "short" });
 
-        const icon = getWeatherIcon(codes[i]);
+    const icon = getWeatherIcon(codes[i]);
 
-        const card = document.createElement("li");
+    const card = document.createElement("li");
 
-        card.classList.add("dailyForecast_card");
+    card.classList.add("dailyForecast_card");
 
-        card.innerHTML = `
+    card.innerHTML = `
     <h3>${weekday}</h3>
     <img src="assets/images/${icon}">
     <div class="dailyForecast_cardNumber">
@@ -125,9 +129,9 @@ export function renderDailyForecast(weather) {
     </div>
   `;
 
-        list.appendChild(card);
+    list.appendChild(card);
 
-    }
+  }
 }
 
 /* Hourly forecast */
@@ -139,27 +143,6 @@ export function renderHourlyForecastByDay(dayData, nextDayData = []) {
   const nowHour = new Date().getHours();
 
   let startIndex = dayData.findIndex(item => {
-  const itemDate = new Date(item.time);
-  const now = new Date();
-
-  return (
-    itemDate.getHours() === now.getHours() &&
-    itemDate.getDate() === now.getDate()
-  );
-});
-
-if (startIndex === -1) {
-  startIndex = 0;
-}
-
-const today = new Date().toISOString().split("T")[0];
-const currentDay = dayData[0].time.split("T")[0];
-
-let slice = [];
-
-if (currentDay === today) {
-  
-  let startIndex = dayData.findIndex(item => {
     const itemDate = new Date(item.time);
     const now = new Date();
 
@@ -169,28 +152,49 @@ if (currentDay === today) {
     );
   });
 
-  if (startIndex === -1) startIndex = 0;
+  if (startIndex === -1) {
+    startIndex = 0;
+  }
 
-  slice = dayData.slice(startIndex);
+  const today = new Date().toISOString().split("T")[0];
+  const currentDay = dayData[0].time.split("T")[0];
 
-  if (slice.length < 8 && nextDayData.length) {
-    const missing = 8 - slice.length;
-    const nextSlice = nextDayData.slice(0, missing);
-    slice = slice.concat(nextSlice);
+  let slice = [];
+
+  if (currentDay === today) {
+
+    let startIndex = dayData.findIndex(item => {
+      const itemDate = new Date(item.time);
+      const now = new Date();
+
+      return (
+        itemDate.getHours() === now.getHours() &&
+        itemDate.getDate() === now.getDate()
+      );
+    });
+
+    if (startIndex === -1) startIndex = 0;
+
+    slice = dayData.slice(startIndex);
+
+    if (slice.length < 8 && nextDayData.length) {
+      const missing = 8 - slice.length;
+      const nextSlice = nextDayData.slice(0, missing);
+      slice = slice.concat(nextSlice);
+    }
+
+    slice = slice.slice(0, 8);
+
+  } else {
+
+    slice = dayData.filter(item => {
+      const hour = new Date(item.time).getHours();
+
+      return hour >= 8 && hour <= 22 && hour % 2 === 0;
+    }).slice(0, 8);
   }
 
   slice = slice.slice(0, 8);
-
-} else {
-
-  slice = dayData.filter(item => {
-    const hour = new Date(item.time).getHours();
-
-    return hour >= 8 && hour <= 22 && hour % 2 === 0;
-  }).slice(0, 8);
-}
-
-slice = slice.slice(0, 8);
 
   slice.forEach((item, index) => {
     const time = new Date(item.time);

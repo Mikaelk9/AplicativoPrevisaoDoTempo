@@ -301,6 +301,8 @@ const minLeft = document.querySelector(".minLeft");
 const hourlyForecast = document.querySelector(".hourlyForecast");
 const tempCard = document.querySelector(".temp");
 const retryButton = document.querySelector(".retry_button");
+const header = document.querySelector("header");
+const search = document.querySelector(".search");
 
 function showLoading() {
   tempCard.classList.add("is_loading");
@@ -316,6 +318,8 @@ function showError() {
 
   minLeft.classList.add("hidden");
   hourlyForecast.classList.add("hidden");
+  header.classList.add("hidden");
+  search.classList.add("hidden");
 
 }
 
@@ -325,7 +329,8 @@ function hideError() {
 
   minLeft.classList.remove("hidden");
   hourlyForecast.classList.remove("hidden");
-
+  header.classList.remove("hidden");
+  search.classList.remove("hidden");
 }
 
 retryButton.addEventListener("click", async () => {
