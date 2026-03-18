@@ -231,7 +231,7 @@ export function groupHourlyByDay(hourly) {
   const { time, temperature_2m, weathercode, precipitation } = hourly;
 
   for (let i = 0; i < time.length; i++) {
-    const date = time[i].split("T")[0]; // "2026-03-17"
+    const date = time[i].split("T")[0]; 
 
     if (!grouped[date]) {
       grouped[date] = [];

@@ -43,7 +43,7 @@ setupActiveButtons('.dropdown_menu_units_precipitation button');
 
 /*--------------------------------------------*/
 
-/*dropdown_hhourlyForecast*/
+/*dropdown_hourlyForecast*/
 const dropdown_hourlyForecast = document.querySelector('.dropdown_hourlyForecast');
 const button_hourlyForecast = dropdown_hourlyForecast.querySelector('.dropdown_hourlyForecast_button');
 
@@ -103,7 +103,7 @@ let hourlyGrouped = null;
 let selectedDay = null;
 
 
-
+/* Submit */
 const form = document.querySelector(".search_form");
 const inputSearch = document.querySelector("#search");
 
@@ -139,6 +139,8 @@ form.addEventListener("submit", async (e) => {
 
 });
 
+
+/*City Suggestions */
 export function renderCitySuggestions(cities) {
 
   const dropdown = document.querySelector(".search_dropdown");
@@ -197,6 +199,8 @@ import {
   renderDailyForecast,
 } from "./ui.js";
 
+
+/* Saved Units */
 import { units, saveUnits } from "./units.js";
 
 function applySavedUnits() {
@@ -223,6 +227,7 @@ applySavedUnits();
 
 let lastCoords = null;
 let lastWeather = null;
+
 
 function updateWeatherUI() {
   if (!lastWeather || !lastCoords) return;

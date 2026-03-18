@@ -1,14 +1,14 @@
-# 'Projeto em construção'
-
----
 # Aplicativo de clima
+
+Projeto front-end que consome uma API de previsão do tempo para exibir dados meteorológicos em tempo real, com foco em experiência do usuário e organização de dados.
 
 ## Índice
 
 - [Visão geral](#visão-geral)
-  - [Funcionalidades](#Funcionalidades)
+  - [Funcionalidades](#funcionalidades)
   - [Screenshot](#screenshot)
   - [Links](#links)
+- [Detalhes técnicos](#detalhes-técnicos)  
 - [Meu processo](#meu-processo)
   - [Construído com](#construído-com)
   - [O que eu aprendi](#o-que-eu-aprendi)
@@ -20,20 +20,26 @@
 
 ## Visão geral
 
+Este projeto consiste em um aplicativo de previsão do tempo que permite ao usuário buscar qualquer cidade e visualizar informações meteorológicas detalhadas, incluindo previsão atual, por hora e semanal.
+
+O foco principal foi desenvolver uma aplicação dinâmica, responsiva e com boa experiência de uso, simulando comportamentos de aplicações reais.
+
 ### Funcionalidades
 
-Os usuários devem ser capazes de:
+Os usuários podem:
 
-- Buscar informações meteorológicas digitando um local na barra de pesquisa
-- Visualizar as condições climáticas atuais, incluindo temperatura, ícone do clima e detalhes da localização
-- Ver métricas adicionais como sensação térmica, porcentagem de umidade, velocidade do vento e volume de precipitação
-- Navegar por uma previsão de 7 dias com temperaturas máximas/mínimas diárias e ícones do clima
-- Visualizar uma previsão por hora mostrando as mudanças de temperatura ao longo do dia
-- Alternar entre diferentes dias da semana usando o seletor de dias na seção de previsão por hora
-- Alternar entre unidades de medida Imperial e Métrica pelo seletor de unidades
-- Alternar entre unidades específicas de temperatura (Celsius e Fahrenheit) e unidades de velocidade do vento (km/h e mph) e precipitação (milímetros) pelo seletor de unidades
-- Visualizar o layout ideal da interface dependendo do tamanho da tela do dispositivo
-- Ver estados de hover e focus para todos os elementos interativos da página
+- Buscar clima por cidade ou país
+- Visualizar temperatura atual e condição do tempo
+- Ver informações adicionais:
+  - Sensação térmica
+  - Umidade
+  - Velocidade do vento
+  - Precipitação
+- Visualizar previsão para 7 dias
+- Acompanhar previsão por hora (com seleção de dias)
+- Alternar entre unidades (Celsius/Fahrenheit, km/h/mph)
+- Utilizar a aplicação em diferentes tamanhos de tela (responsivo)
+- Visualizar tratamento de erro em caso de falha na API ou busca inválida
 
 ---
 
@@ -49,6 +55,17 @@ Os usuários devem ser capazes de:
 
 ---
 
+## Detalhes técnicos
+
+- Consumo da API Open-Meteo
+- Manipulação dinâmica do DOM com JavaScript puro
+- Controle de estados da interface (loading, sucesso, erro)
+- Sistema de renderização de dados por:
+  - Clima atual
+  - Previsão por hora
+  - Previsão semanal
+- Mapeamento de códigos climáticos para ícones personalizados
+
 ## Meu processo
 
 ### Construído com
@@ -57,23 +74,30 @@ Os usuários devem ser capazes de:
 - **CSS3** – Estilização, layout responsivo e animações.
 - **JavaScript (ES6+)** – Manipulação do DOM e controle dinâmico de estados.
 - **Google Fonts** – Tipografia personalizada.
-- **API** - Utilizado a api (open-Meteo API) para atualização de estados e informações meteorológicas.
+- **API** – Open-Meteo para atualização de estados e informações meteorológicas.
 - **Git & GitHub** – Versionamento e hospedagem do projeto.
 
 ---
 
 ### O que eu aprendi
 
-- Gostei muito de mexer com o menu dropdown, foi a primeira vez de fato que dei uma atenção em menus assim.
-
-- Tive que estudar e apreder a utilizar a api (open-Meteo API), para implementar ao meu projeto as funcionalidades de busca e atualização de informações meteorológicas.
+- Como consumir e trabalhar com APIs externas
+- Manipulação e atualização dinâmica do DOM
+- Organização de dados complexos (horários, dias, clima)
+- Criação de componentes reutilizáveis em JavaScript
+- Implementação de estados de erro na interface
 
 ---
 
 ### Desenvolvimento contínuo
 
-Vou buscar mais projetos com a utilização de APIS para implementação ao projeto.
+Possíveis melhorias futuras:
 
+- Autocomplete com sugestões de cidades
+- Modo dark/light automático
+- Geolocalização automática do usuário
+- Animações nos ícones climáticos
+- Melhor organização do código em módulos (refatoração completa)
 
 ---
 
